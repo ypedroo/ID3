@@ -1,0 +1,15 @@
+RISCO,HISTORICO DE CREDITO,DIVIDA,GARANTIA,RENDA
+alto,ruim,alta,nenhuma,0-15 mil
+alto,desconhecida,alta,nenhuma,15-35 mil
+moderado,desconhecida,baixa,nenhuma,15-35 mil
+alto,desconhecida,baixa,nenhuma,0-15 mil
+baixo,desconhecida,baixa,nenhuma,acima de 35 mil
+baixo,desconhecida,baixa,adequada,acima de 35 mil
+alto,ruim,baixa,nenhuma,0-15 mil
+moderado,ruim,baixa,adequada,acima de 35 mil
+baixo,boa,baixa,nenhuma,acima de 35 mil
+baixo,boa,alta,adequada,acima de 35 mil
+alto,boa,alta,nenhuma,0-15 mil
+moderado,boa,alta,nenhuma,15-35 mil
+baixo,boa,alta,nenhuma,acima de 35 mil
+alto,ruim,alta,nenhuma,15-35 mi
