@@ -10,10 +10,11 @@ class ID3:
 		for d1 in d:
 			data.append(d1.split(","))
 		find.close()
+
 		
 		self.featureNames = self.get_features(data)		
 		data = data[1:]
-		self.classes = self.get_classes(data)		
+		self.classes = self.get_classes(data)	
 		data = self.get_pure_data(data)
 
 		return data,self.classes,self.featureNames	
@@ -22,9 +23,9 @@ class ID3:
 		data = data[1:]
 		classes = []
 		for d in range(len(data)):
-			classes.append(data[d][-1])			
-
+			classes.append(data[d][-1])	
 		return classes
+		
 	
 	def get_features(self, data):
 		features = data[0]
@@ -32,9 +33,9 @@ class ID3:
 		return features
 	
 	def get_pure_data(self, dataRows):
-		dataRows = dataRows[1:]
+		dataRows = dataRows[1:]	
 		for d in range(len(dataRows)):
-			dataRows[d] = dataRows[d][:-1]		
+			dataRows[d] = dataRows[d][:-1]	
 		return dataRows
 	
 	def empty_list(self, size):
@@ -52,14 +53,14 @@ class ID3:
 		distinctValues = []
 		for item in dataList:
 			if(distinctValues.count(item) == 0):
-				distinctValues.append(item)		
+				distinctValues.append(item)
 		return distinctValues
 	
 	def get_distinct_values_table(self, dataTable, column):
 		distinctValues = []
 		for row in dataTable:
 			if(distinctValues.count(row[column]) == 0):
-				distinctValues.append(row[column])		
+				distinctValues.append(row[column])
 		return distinctValues	
 	
 	def get_entropy(self, prop):
@@ -72,7 +73,7 @@ class ID3:
 		newData = len(trainingData)
 		newFeature = len(features)
 			
-		newClasses = self.get_distinct_values(classes)				
+		newClasses = self.get_distinct_values(classes)
 		frequency = self.empty_list(len(newClasses))
 		totalEntropy = 0		
 		index = 0
@@ -80,10 +81,9 @@ class ID3:
 		for aclass in newClasses:
 			frequency[index] = classes.count(aclass)
 			prob = float(frequency[index])/newData
-			totalEntropy += self.get_entropy(prob)			
-			index += 1
-				
-		default = classes[self.get_max(frequency)]		
+			totalEntropy += self.get_entropy(prob)	
+			index += 1			
+		default = classes[self.get_max(frequency)]
 		if(newData == 0 or newFeature == 0 or (maxlevel >= 0 and level > maxlevel)):
 			return default
 		elif classes.count(classes[0]) == newData:
@@ -123,9 +123,7 @@ class ID3:
 				
 				newTree[features[bestFeature]][value] = subtree
 			return newTree
-						
-		
-		print(newClasses)
+			
 		
 	def get_gain(self, data, classes, feature):
 		gain = 0		
@@ -172,9 +170,10 @@ class ID3:
 			print(seperator + " -> (", dic +")")  	
 
 tree = ID3()
-tree_data, dec_node, leaf_node = tree.read_data('loan.dat')
+tree_data, leaf_node,  dec_node= tree.read_data('loan.dat')
+#continuar a partir da chamada do create_tree
 
-ntree = tree.create_tree(tree_data, dec_node, leaf_node)
+ntree = tree.create_tree(tree_data,leaf_node, dec_node )
 
 tree.printTree(ntree, ' ')
 	
