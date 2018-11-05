@@ -20,7 +20,7 @@ class ID3:
         return data, self.classes, self.featureNames
 
     def get_classes(self, data):
-        # data = data[1:]
+        data = data[1:]
         classes = []
         for d in range(len(data)):
             classes.append(data[d][-1])
@@ -32,7 +32,7 @@ class ID3:
         return features
 
     def get_pure_data(self, dataRows):
-        # dataRows = dataRows[1:]
+        dataRows = dataRows[1:]
         for d in range(len(dataRows)):
             dataRows[d] = dataRows[d][:-1]
         return dataRows
