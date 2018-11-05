@@ -12,7 +12,7 @@ class ID3:
 		find.close()
 
 		
-		self.featureNames = self.get_features(data)		
+		self.featureNames = self.get_features(data) 		
 		data = data[1:]
 		self.classes = self.get_classes(data)	
 		data = self.get_pure_data(data)
@@ -20,7 +20,7 @@ class ID3:
 		return data,self.classes,self.featureNames	
 	
 	def get_classes(self, data):
-		data = data[1:]
+		# data = data[1:]
 		classes = []
 		for d in range(len(data)):
 			classes.append(data[d][-1])	
@@ -33,7 +33,7 @@ class ID3:
 		return features
 	
 	def get_pure_data(self, dataRows):
-		dataRows = dataRows[1:]	
+		# dataRows = dataRows[1:]	
 		for d in range(len(dataRows)):
 			dataRows[d] = dataRows[d][:-1]	
 		return dataRows
@@ -86,10 +86,10 @@ class ID3:
 		default = classes[self.get_max(frequency)]
 		if(newData == 0 or newFeature == 0 or (maxlevel >= 0 and level > maxlevel)):
 			return default
-		elif classes.count(classes[0]) == newData:
+		elif classes.count(classes[0]) == newData: #Testa se todos as classes sao iguais
 			return classes[0]
 		else:
-			gain = self.empty_list(newFeature)			
+			gain = self.empty_list(newFeature)	
 			for feature in range(newFeature):
 				g = self.get_gain(trainingData, classes, feature)
 				gain[feature] = totalEntropy - g				
@@ -99,7 +99,7 @@ class ID3:
 			
 			values = self.get_distinct_values_table(trainingData, bestFeature)				
 			for value in values:
-				newdata = []
+				newData = []
 				newClasses = []
 				index = 0
 				for row in trainingData:
@@ -115,11 +115,11 @@ class ID3:
 							newRow.extend(row[bestFeature + 1:])
 							newNames = features[:bestFeature]
 							newNames.extend(features[bestFeature+1:])
-						newdata.append(newRow)
+						newData.append(newRow)
 						newClasses.append(classes[index])
 					index += 1
 					
-				subtree = self.create_tree(newdata, newClasses, newNames, maxlevel, level + 1)
+				subtree = self.create_tree(newData, newClasses, newNames, maxlevel, level + 1)
 				
 				newTree[features[bestFeature]][value] = subtree
 			return newTree
@@ -128,9 +128,9 @@ class ID3:
 	def get_gain(self, data, classes, feature):
 		gain = 0		
 		newData = len(data)
-		
-		values = self.get_distinct_values_table(data, feature)		
-		featureCounts = self.empty_list(len(values))
+				
+		values = self.get_distinct_values_table(data, feature) #valores distintos da coluna
+		featureCounts = self.empty_list(len(values)) 
 		entropy = self.empty_list(len(values))		
 		valueIndex = 0
 		for value in values:
@@ -138,8 +138,8 @@ class ID3:
 			newClasses = []
 			for row in data:
 				if row[feature] == value:
-					featureCounts[valueIndex] += 1
-					newClasses.append(classes[dataIndex])
+					featureCounts[valueIndex] += 1         #quantidade de cada feature distinta
+					newClasses.append(classes[dataIndex])  #pega as classes de cada feature
 				dataIndex += 1
 			
 			classValues = self.get_distinct_values(newClasses)
@@ -152,8 +152,8 @@ class ID3:
 				classIndex += 1
 			
 			for classIndex in range(len(classValues)):
-				pr = float(classCounts[classIndex])/sum(classCounts)
-				entropy[valueIndex] += self.get_entropy(pr)				
+				currentClass = float(classCounts[classIndex])/sum(classCounts) #
+				entropy[valueIndex] += self.get_entropy(currentClass)				
 			
 			pn = float(featureCounts[valueIndex])/newData 
 			gain = gain + pn * entropy[valueIndex]			
@@ -169,9 +169,9 @@ class ID3:
 		else:
 			print(seperator + " -> (", dic +")")  	
 
+
 tree = ID3()
 tree_data, leaf_node,  dec_node= tree.read_data('loan.dat')
-#continuar a partir da chamada do create_tree
 
 ntree = tree.create_tree(tree_data,leaf_node, dec_node )
 
