@@ -168,35 +168,31 @@ class ID3:
         else:
             print(seperator + " -> (", dic + ")")
 
-    def validate_new_input(self, generated_tree, input):
-        # for risk, historical in generated_tree:
-        #     if type(historical) is dict:
-        #         for historic, debt in historical:
-        #             if historic == input.historic:
-        #                 if type(debt) is dict:
-        #                     for incoming_key, incoming_value in debt:
-        #                         if incoming_value == input.current_incoming:
-        #                             print(risk)
-        #                         else:
-        #                             continue
-        #             else:
-        #                 continue
-        #     elif historical == input.current_incoming:
-        #         print(risk)
-        #     else:
-        #         print('Risco não encontrado!')
+    def has_match(self, dtree, features, user_input):
+        if isinstance(dtree, str):
+            return dtree == user_input[-1]
+        elif type(dtree) == dict and dtree[features[0]] is not None:
+            values_dict = dtree[features[0]]
+            values = list(values_dict.keys())
+            current_input = user_input[0]
 
-        if input['historic'] == 'desconhecida' and ((input['debt'] == 'alta' and input['incoming'] == '15-35 mil') or (input['debt'] == 'baixa' or input['incoming'] == '0-15 mil')):
-            print('Risco: alto')
-        elif input['historic'] == 'ruim' and ((input['debt'] == 'baixa' and input['incoming'] == '0-15 mil') or (input['debt'] == 'alta' or input['incoming'] == '15-35 mil')):
-            print('Risco: alto')
-        elif input['historic'] == 'desconhecida' and input['incoming'] == '15-35 mil':
-            print('Risco: moderado')
-        elif input['historic'] == 'ruim' and input['incoming'] == 'acima de 35 mil':
-            print('Risco: moderado')
-        elif input['historic'] == 'boa' and input['incoming'] == '15-35 mil':
-            print('Risco: moderado')
-        elif input['incoming'] == 'acima de 35 mil':
-            print('Risco: baixo')
+            if any(current_input == value for value in values):
+                next_values_dict = values_dict[current_input]
+                if type(next_values_dict) is dict:
+                    return self.has_match(next_values_dict, features[1:], user_input[1:])
+                else:
+                    return next_values_dict == user_input[-1]
+            else:
+                return False
         else:
-            print('Risco não encontrado!')
+            return False
+
+    def format_decision_tree(self, dtree, features, user_input):
+        first_feature = features[0]
+        first_level = dtree[first_feature]
+        first_level_values = list(first_level.keys())
+        for risk in first_level_values:
+            if self.has_match(first_level[risk], features[1:], user_input):
+                return risk
+
+        return "Risk not found!"

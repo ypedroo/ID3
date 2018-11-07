@@ -37,12 +37,7 @@ def start():
     if current_incoming not in incoming:
         exit_execution("Invalid incoming!")
 
-    tree.validate_new_input(ntree, {
-        'historic': historic,
-        'debt': debt,
-        'guarantee': guarantee,
-        'incoming': current_incoming
-    })
+    print(tree.format_decision_tree(ntree, dec_node, [historic, debt, guarantee, current_incoming]))
 
     start()
 
