@@ -15,20 +15,15 @@ def exit_execution(message):
 
 
 def start():
-    risks = ['alto', 'moderado', 'baixo']
     historical = ['ruim', 'desconhecida', 'boa']
     debts = ['alta', 'baixa']
     guarantees = ['nenhuma', 'adequada']
     incoming = ['0-15 mil', '15-35 mil', 'acima de 35 mil']
 
-    risk = input("Type the risk: ")
     historic = input("Type the historic: ")
     debt = input("Type the debt: ")
     guarantee = input("Type the guarantee: ")
     current_incoming = input("Type the incoming: ")
-
-    if risk not in risks:
-        exit_execution("Invalid risk!")
 
     if historic not in historical:
         exit_execution("Invalid historic!")
