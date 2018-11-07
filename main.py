@@ -37,5 +37,7 @@ def start():
     if current_incoming not in incoming:
         exit_execution("Invalid incoming!")
 
+    start()
+
 
 start()
