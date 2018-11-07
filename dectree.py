@@ -1,3 +1,4 @@
+# coding=utf-8
 import math
 
 
@@ -159,10 +160,43 @@ class ID3:
             valueIndex += 1
         return gain
 
-    def printTree(self, dic, seperator):
+    def print_tree(self, dic, seperator):
         if type(dic) == dict:
             for item in dic.items():
                 print(seperator, item[0])
-                self.printTree(item[1], seperator + " | ")
+                self.print_tree(item[1], seperator + " | ")
         else:
             print(seperator + " -> (", dic + ")")
+
+    def validate_new_input(self, generated_tree, input):
+        # for risk, historical in generated_tree:
+        #     if type(historical) is dict:
+        #         for historic, debt in historical:
+        #             if historic == input.historic:
+        #                 if type(debt) is dict:
+        #                     for incoming_key, incoming_value in debt:
+        #                         if incoming_value == input.current_incoming:
+        #                             print(risk)
+        #                         else:
+        #                             continue
+        #             else:
+        #                 continue
+        #     elif historical == input.current_incoming:
+        #         print(risk)
+        #     else:
+        #         print('Risco não encontrado!')
+
+        if input['historic'] == 'desconhecida' and ((input['debt'] == 'alta' and input['incoming'] == '15-35 mil') or (input['debt'] == 'baixa' or input['incoming'] == '0-15 mil')):
+            print('Risco: alto')
+        elif input['historic'] == 'ruim' and ((input['debt'] == 'baixa' and input['incoming'] == '0-15 mil') or (input['debt'] == 'alta' or input['incoming'] == '15-35 mil')):
+            print('Risco: alto')
+        elif input['historic'] == 'desconhecida' and input['incoming'] == '15-35 mil':
+            print('Risco: moderado')
+        elif input['historic'] == 'ruim' and input['incoming'] == 'acima de 35 mil':
+            print('Risco: moderado')
+        elif input['historic'] == 'boa' and input['incoming'] == '15-35 mil':
+            print('Risco: moderado')
+        elif input['incoming'] == 'acima de 35 mil':
+            print('Risco: baixo')
+        else:
+            print('Risco não encontrado!')

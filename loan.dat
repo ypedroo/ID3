@@ -1,4 +1,4 @@
-RISCO,HISTORICO DE CREDITO,DIVIDA,GARANTIA,RENDA
+risk,credit_historic,debt,guarantee,incoming
 alto,ruim,alta,nenhuma,0-15 mil
 alto,desconhecida,alta,nenhuma,15-35 mil
 moderado,desconhecida,baixa,nenhuma,15-35 mil

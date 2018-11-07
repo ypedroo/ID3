@@ -6,7 +6,7 @@ tree_data, leaf_node, dec_node = tree.read_data('loan.dat')
 
 ntree = tree.create_tree(tree_data, leaf_node, dec_node)
 
-tree.printTree(ntree, ' ')
+tree.print_tree(ntree, ' ')
 
 
 def exit_execution(message):
@@ -36,6 +36,13 @@ def start():
 
     if current_incoming not in incoming:
         exit_execution("Invalid incoming!")
+
+    tree.validate_new_input(ntree, {
+        'historic': historic,
+        'debt': debt,
+        'guarantee': guarantee,
+        'incoming': current_incoming
+    })
 
     start()
 
