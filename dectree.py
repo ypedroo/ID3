@@ -187,7 +187,7 @@ class ID3:
         else:
             return False
 
-    def format_decision_tree(self, dtree, features, user_input):
+    def validate_and_get_risk(self, dtree, features, user_input):
         first_feature = features[0]
         first_level = dtree[first_feature]
         first_level_values = list(first_level.keys())
