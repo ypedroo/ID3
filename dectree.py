@@ -166,11 +166,3 @@ class ID3:
                 self.printTree(item[1], seperator + " | ")
         else:
             print(seperator + " -> (", dic + ")")
-
-
-tree = ID3()
-tree_data, leaf_node, dec_node = tree.read_data('loan.dat')
-
-ntree = tree.create_tree(tree_data, leaf_node, dec_node)
-
-tree.printTree(ntree, ' ')
