@@ -37,7 +37,9 @@ def start():
     if current_incoming not in incoming:
         exit_execution("Invalid incoming!")
 
+    print()
     print(tree.validate_and_get_risk(ntree, dec_node, [historic, debt, guarantee, current_incoming]))
+    print()
 
     start()
 
